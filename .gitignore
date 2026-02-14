@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .ipynb_checkpoints
+.env
+package.json
+package-lock.json
