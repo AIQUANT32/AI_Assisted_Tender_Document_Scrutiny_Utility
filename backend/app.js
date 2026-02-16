@@ -27,6 +27,6 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.use('/api/auth', authRoutes);
-app.use('api/')
+app.use("/api/auth", authRoutes);
+app.use("/api/tenders",tenderRoutes);
 
