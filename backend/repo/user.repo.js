@@ -5,5 +5,5 @@ exports.createUser = (data) => {
 };
 
 exports.findUserByUsername = (username) => {
-    return User.findOne(username);
+    return User.findOne({username});
 }

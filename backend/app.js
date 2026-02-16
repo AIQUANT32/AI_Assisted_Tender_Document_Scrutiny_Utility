@@ -4,6 +4,7 @@ const cors = require('cors');
 const morgan = require("morgan");
 require("dotenv").config();
 const authRoutes = require("./route/auth.route");
+const tenderRoutes =require("./route/tender.route");
 
 
 
@@ -27,4 +28,5 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.use('/api/auth', authRoutes);
+app.use('api/')
 
