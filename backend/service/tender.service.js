@@ -1,22 +1,17 @@
 const tenderRepo = require("../repo/tender.repo");
 
-exports.createTender = async (data, userId) => {
+exports.createTender = async (data) => {
     if(!data.expiryDate){
         throw new Error("Expiry date is required");
     }
 
     const expiry = new Date(data.expiryDate);
 
-    if(expiry <= newDate()){
+    if(expiry <= new Date()){
         throw new Error("Expiry date must be in the future");
     }
 
-    const tenderData = {
-        ...data,
-        createdBy : userId
-    };
-
-    return await tenderRepo.createTender(tenderData);
+    return await tenderRepo.createTender(data);
 }
 
 exports.getAllTenders = async() => {
