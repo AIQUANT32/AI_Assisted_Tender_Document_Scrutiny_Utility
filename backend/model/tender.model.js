@@ -2,6 +2,12 @@ const mongoose = require("mongoose");
 
 const TenderSchema = new mongoose.Schema(
   {
+    tenderId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    
     name: {
       type: String,
       required: true,
@@ -24,6 +30,29 @@ const TenderSchema = new mongoose.Schema(
       },
     },
 
+    department: {
+      type: String,
+      required: true,
+      enum: [
+        "Public Works Department",
+        "Urban Development Department",
+        "Health Department",
+        "Education Department",
+        "Energy Department",
+        "Transport Department",
+        "IT Department",
+        "Procurement Department",
+        "Municipal Corporation",
+        "Infrastructure Development Corporation",
+      ],
+    },
+
+    organisationName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
     expiryDate: {
       type: Date,
       required: true,
@@ -44,9 +73,8 @@ const TenderSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-TenderSchema.methods.isExpired = function(){
-    return new Date() > this.expiryDate;
-} 
-
+TenderSchema.methods.isExpired = function () {
+  return new Date() > this.expiryDate;
+};
 
 module.exports = mongoose.model("Tender", TenderSchema);
