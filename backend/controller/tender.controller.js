@@ -4,7 +4,8 @@ const tenderService = require("../service/tender.service");
 exports.createTender = async (req, res) => {
   try {
     const tender = await tenderService.createTender(
-      req.body
+      req.body,
+      req.user.id
     );
 
     res.status(201).json(tender);

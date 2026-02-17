@@ -12,8 +12,7 @@ exports.signup = async ({username, password}) => {
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await userRepo.createUser({username, password: hashedPassword});
-    return {message : "User Created Successfully"}
-    // return generateToken(newUser);
+    return generateToken(newUser);
 }
 
 exports.login = async ({username, password}) => {
@@ -25,9 +24,8 @@ exports.login = async ({username, password}) => {
     if(!isPasswordValid){
         throw new Error("Invalid password");
     }
-    return {message : "Login Successful"};
 
-    // return generateToken(user);
+    return generateToken(user);
 }
 
 const generateToken = (user) => {
