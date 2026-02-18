@@ -8,6 +8,6 @@ router.post("/", Controller.createTender);
 router.get("/", Controller.getAllTenders);
 
 // Get Tender By ID
-router.get("/:tenderId", Controller.getTenderById);
+router.get("/:id", Controller.getTenderById);
 
 module.exports = router;

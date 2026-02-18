@@ -9,13 +9,13 @@ exports.getAllTenders = () => {
 };
 
 
-exports.getTenderById = (tenderId) => {
-    return Tender.findById({tenderId});
+exports.getTenderById = (id) => {
+    return Tender.findById(id);
 };
 
-exports.updateTenderStatus = (tenderId, status) => {
+exports.updateTenderStatus = (id, status) => {
     return Tender.findByIdAndUpdate(
-        {tenderId},
+        id,
         { status },
         { new: true }
     );
@@ -24,10 +24,3 @@ exports.updateTenderStatus = (tenderId, status) => {
 exports.countActiveTenders = () => {
     return Tender.countDocuments({ status: "ACTIVE" });
 };
-
-exports.countTenderByDepartment = (tenderId,department) => {
-    return Tender.countDocuments({ 
-        tenderId,
-        department
-  });
-}
