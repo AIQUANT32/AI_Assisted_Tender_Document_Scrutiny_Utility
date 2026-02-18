@@ -9,6 +9,7 @@ const Sidebar = () => {
         <div className="sidebar-nav">
           <NavLink
             to="/dashboard"
+            end 
             className={({ isActive }) =>
               `sidebar-link ${isActive ? "active" : ""}`
             }
@@ -18,6 +19,7 @@ const Sidebar = () => {
 
           <NavLink
             to="/tenders/create"
+            end
             className={({ isActive }) =>
               `sidebar-link ${isActive ? "active" : ""}`
             }
@@ -27,6 +29,7 @@ const Sidebar = () => {
 
           <NavLink
             to="/tenders"
+            end
             className={({ isActive }) =>
               `sidebar-link ${isActive ? "active" : ""}`
             }
@@ -36,6 +39,7 @@ const Sidebar = () => {
 
           <NavLink
             to="/bidders/create"
+            end
             className={({ isActive }) =>
               `sidebar-link ${isActive ? "active" : ""}`
             }

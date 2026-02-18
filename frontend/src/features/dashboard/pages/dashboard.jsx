@@ -1,6 +1,9 @@
-import {FiPlus, FiUserPlus} from "react-icons/fi";
+import { FiPlus, FiUserPlus } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  
   return (
     <div className="dashboard-content">
       <div className="stats-grid">
@@ -29,13 +32,16 @@ const Dashboard = () => {
       </div>
 
       <div className="quick-actions">
-        <button className="action-btn primary icon-above">
-          <FiPlus size={36}/>
+        <button
+          className="action-btn primary icon-above"
+          onClick={() => navigate("/tenders/create")}
+        >
+          <FiPlus size={36} />
           <span>Create New Tender</span>
         </button>
 
         <button className="action-btn secondary icon-above">
-          <FiUserPlus size={36}/>
+          <FiUserPlus size={36} />
           <span>Add Bidder</span>
         </button>
       </div>
