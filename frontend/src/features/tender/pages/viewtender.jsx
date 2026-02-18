@@ -62,19 +62,23 @@ const ViewTenders = () => {
 
                 <div className="tender-meta">
                   <div>
-                    <strong>Expiry:</strong>{" "}
-                    {new Date(tender.expiryDate).toLocaleString()}
+                    <strong>Id:</strong>{" "}
+                    {tender.tenderId}
                   </div>
 
                   <div>
-                    <strong>Documents:</strong>{" "}
-                    {tender.requiredDocuments.join(", ")}
+                    <strong>Expiry:</strong>{" "}
+                    {new Date(tender.expiryDate).toLocaleString()}
                   </div>
                   <div>
                     <strong>Department:</strong> {tender.department}
                   </div>
                   <div>
                     <strong>Organisation:</strong> {tender.organisationName}
+                  </div>
+                  <div>
+                    <strong>Documents:</strong>{" "}
+                    {tender.requiredDocuments.join(", ")}
                   </div>
                 </div>
               </div>

@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const userRepo = require("../repo/user.repo");
 
 const JWT_SECRET = process.env.JWT_SECRET;
-console.log(JWT_SECRET);
+// console.log(JWT_SECRET);
 
 exports.signup = async ({username, password}) => {
     const existingUser = await userRepo.findUserByUsername(username);

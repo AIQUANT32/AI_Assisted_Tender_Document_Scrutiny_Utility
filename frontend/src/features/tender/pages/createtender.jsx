@@ -125,6 +125,15 @@ const CreateTender = () => {
             ))}
           </select>
 
+          <label>Organisation Name</label>
+          <input
+            type="text"
+            name="organisationName"
+            value={form.organisationName}
+            onChange={handleChange}
+            required
+          />
+
           <label>Required Documents</label>
           <div className="checkbox-group">
             {documentOptions.map((doc) => (
