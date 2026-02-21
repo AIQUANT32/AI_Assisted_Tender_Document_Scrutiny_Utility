@@ -45,6 +45,7 @@ exports.completeSubmission = async (req,res) => {
 
 exports.reviewSubmission = async(req,res) => {
     try{
+        console.log(req.body);
         const {id} = req.params;
         const {action,remarks} = req.body;
 

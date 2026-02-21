@@ -10,7 +10,7 @@ exports.getAllTenders = () => {
 
 
 exports.getTenderById = (tenderId) => {
-    return Tender.findById({tenderId});
+    return Tender.findOne({tenderId});
 };
 
 exports.updateTenderStatus = (tenderId, status) => {

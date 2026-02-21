@@ -12,6 +12,10 @@ exports.startSubmission = async (data, userId) => {
     throw new Error("Tender is Closed");
   }
 
+  if(tender.createdBy.toString() === userId.toString()){
+    throw new Error("Tender creator cannot bid on their own tender");
+  }
+
   const bidExists = await bidderRepo.findByTenderAndBidder(tenderId, userId);
   if (bidExists) {
     throw new Error("Submission already exists for this Tender");
