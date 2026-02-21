@@ -152,3 +152,7 @@ exports.assignBidder = async (bidderId) => {
 exports.getMyBids = async (userId) => {
   return bidderRepo.findByBidder(userId);
 };
+
+exports.getBidsByTender = async (tenderId) => {
+  return bidderRepo.findByTender(tenderId);
+}
