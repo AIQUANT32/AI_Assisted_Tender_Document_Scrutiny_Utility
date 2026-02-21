@@ -6,6 +6,7 @@ const TenderSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      immutable : true,
     },
     
     name: {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import "../../styles/authform.css";
+import "../../../styles/authform.css";
 
 const AuthForm = ({ type, onSubmit, error }) => {
   const [form, setForm] = useState({
