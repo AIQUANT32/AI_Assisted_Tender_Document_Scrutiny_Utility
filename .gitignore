@@ -26,3 +26,4 @@ dist-ssr
 .env
 package.json
 package-lock.json
+frontend/src/api.rest
