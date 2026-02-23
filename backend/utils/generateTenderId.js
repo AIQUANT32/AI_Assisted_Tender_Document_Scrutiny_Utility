@@ -21,12 +21,13 @@ const generateTenderId = async (department) => {
         throw new Error("Invalid Department");
     }
 
-    const regexPattern = `^${deptCode}-${year}-`;
+    const regexPattern = new RegExp(`^${deptCode}-${year}-`);
 
     const count = await Tender.countTenderByDepartment(
         regexPattern,
         department
     )
+    console.log(count);
 
     const nextNum = count+1;
     const padded = String(nextNum).padStart(4,"0");

@@ -3,51 +3,76 @@ import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  
+
   return (
-    <div className="dashboard-content">
-      <div className="stats-grid">
-        <div className="stats-card">
-          <div className="stats-title">Active Tenders</div>
-          <div className="stats-value">24</div>
-          <div className="stats-badge">+12%</div>
+    <div className="min-h-screen bg-gray-50 p-8">
+      <div className="max-w-7xl mx-auto space-y-10">
+
+        {/* Stats Section */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+            <div className="text-sm text-gray-500">Active Tenders</div>
+            <div className="mt-2 text-3xl font-semibold text-gray-800">24</div>
+            <div className="mt-2 text-xs font-medium text-green-600 bg-green-50 px-2 py-1 inline-block rounded-full">
+              +12%
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+            <div className="text-sm text-gray-500">Total Bidders</div>
+            <div className="mt-2 text-3xl font-semibold text-gray-800">156</div>
+            <div className="mt-2 text-xs font-medium text-green-600 bg-green-50 px-2 py-1 inline-block rounded-full">
+              +8%
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+            <div className="text-sm text-gray-500">In Processing</div>
+            <div className="mt-2 text-3xl font-semibold text-gray-800">8</div>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+            <div className="text-sm text-gray-500">Completed</div>
+            <div className="mt-2 text-3xl font-semibold text-gray-800">42</div>
+            <div className="mt-2 text-xs font-medium text-green-600 bg-green-50 px-2 py-1 inline-block rounded-full">
+              +15%
+            </div>
+          </div>
+
         </div>
 
-        <div className="stats-card">
-          <div className="stats-title">Total Bidders</div>
-          <div className="stats-value">156</div>
-          <div className="stats-badge">+8%</div>
+        {/* Quick Actions */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+          <button
+            onClick={() => navigate("tenders/create")}
+            className="flex flex-col items-center justify-center bg-indigo-600 hover:bg-indigo-700 
+                       text-white rounded-2xl p-8 transition shadow-sm"
+          >
+            <FiPlus size={36} />
+            <span className="mt-3 text-sm font-medium">
+              Create New Tender
+            </span>
+          </button>
+
+          <button
+            className="flex flex-col items-center justify-center bg-gray-100 hover:bg-gray-200 
+                       text-gray-700 rounded-2xl p-8 transition"
+          >
+            <FiUserPlus size={36} />
+            <span className="mt-3 text-sm font-medium">
+              Add Bidder
+            </span>
+          </button>
+
         </div>
 
-        <div className="stats-card">
-          <div className="stats-title">In Processing</div>
-          <div className="stats-value">8</div>
+        {/* Tip Box */}
+        <div className="bg-white border border-gray-100 rounded-2xl p-6 text-sm text-gray-600 shadow-sm">
+          Tip: Use the workflow tracker to monitor tender progress at each stage.
         </div>
 
-        <div className="stats-card">
-          <div className="stats-title">Completed</div>
-          <div className="stats-value">42</div>
-          <div className="stats-badge">+15%</div>
-        </div>
-      </div>
-
-      <div className="quick-actions">
-        <button
-          className="action-btn primary icon-above"
-          onClick={() => navigate("/tenders/create")}
-        >
-          <FiPlus size={36} />
-          <span>Create New Tender</span>
-        </button>
-
-        <button className="action-btn secondary icon-above">
-          <FiUserPlus size={36} />
-          <span>Add Bidder</span>
-        </button>
-      </div>
-
-      <div className="tip-box">
-        Tip: Use the workflow tracker to monitor tender progress at each stage.
       </div>
     </div>
   );

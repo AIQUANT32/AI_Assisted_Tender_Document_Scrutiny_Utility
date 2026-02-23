@@ -70,6 +70,10 @@ const TenderSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    closedAt : {
+      type : Date,
+      default : null,
+    }
   },
   { timestamps: true },
 );

@@ -1,5 +1,6 @@
 const tenderRepo = require("../repo/tender.repo");
 const generateId = require("../utils/generateTenderId");
+const Tender = require ("../model/tender.model")
 
 exports.createTender = async (data,userId) => {
     if(!data.expiryDate){
@@ -21,8 +22,8 @@ exports.createTender = async (data,userId) => {
     });
 }
 
-exports.getAllTenders = async() => {
-    return await tenderRepo.getAllTenders();
+exports.getAllTenders = async(userId) => {
+    return await tenderRepo.getAllTenders(userId);
 }
 
 exports.getTenderById = async (id) => {
@@ -38,4 +39,9 @@ exports.getTenderById = async (id) => {
     }
 
     return tender;
+};
+
+exports.getByCreator = (userId) => {
+  return Tender.find({ createdBy: userId })
+    .sort({ createdAt: -1 });
 };

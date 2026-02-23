@@ -19,7 +19,8 @@ exports.createTender = async (req, res) => {
 // Get All Tenders
 exports.getAllTenders = async (req, res) => {
   try {
-    const tenders = await tenderService.getAllTenders();
+    const userId = req.user.id;
+    const tenders = await tenderService.getAllTenders(userId);
 
     res.status(200).json(tenders);
 
@@ -38,5 +39,22 @@ exports.getTenderById = async (req, res) => {
 
   } catch (err) {
     res.status(400).json({ message: err.message });
+  }
+};
+
+exports.getMyTenders = async (req, res) => {
+  try {
+    const tenders = await tenderService.getByCreator(req.user.id);
+    console.log(req.user.id)
+
+    res.status(200).json({
+      success: true,
+      data: tenders
+    });
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      message: err.message
+    });
   }
 };

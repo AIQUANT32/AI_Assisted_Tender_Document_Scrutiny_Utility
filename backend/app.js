@@ -7,8 +7,8 @@ const authRoutes = require("./route/auth.route");
 const tenderRoutes = require("./route/tender.route");
 const bidderRoutes = require("./route/bidder.route");
 const authenticateToken = require("./middleware/jwtAuthenticate");
-
-
+const tenderExpiryJob = require("./utils/tenderExpiry.job");
+const tenderCleanupJob = require("./utils/tenderCleanup.job");
 
 mongoose
 .connect(process.env.MONGO_URL)
@@ -28,6 +28,8 @@ app.get('/', (req, res) => {
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
+tenderExpiryJob();
+tenderCleanupJob();
 
 app.use("/api/auth", authRoutes);
 app.use(authenticateToken);

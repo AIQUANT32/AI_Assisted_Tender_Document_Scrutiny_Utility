@@ -145,9 +145,10 @@ exports.assignBidder = async (bidderId) => {
         }
     }
 
-    await tenderRepo.updateTenderStatus(
+    await tenderRepo.closeTender(
         bidder.tenderId,
-        "CLOSED"
+        "CLOSED",
+        closedAt
     )
 
     return {message : "Bidder Assigned Successfully"};
@@ -156,6 +157,20 @@ exports.assignBidder = async (bidderId) => {
 exports.getMyBids = async (userId) => {
   return bidderRepo.findByBidder(userId);
 };
+
+exports.getBidById = async (bidId, userId) => {
+  const bid = await bidderRepo.findById(bidId);
+
+  if(!bid){
+    throw new Error("Bid not found");
+  }
+
+  if(bid.bidderId.toString() !== userId.toString()){
+    throw new Error("Unauthorized");
+  }
+
+  return bid;
+}
 
 exports.getBidsByTender = async (tenderId) => {
   return bidderRepo.findByTender(tenderId);

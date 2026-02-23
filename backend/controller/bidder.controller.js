@@ -94,9 +94,8 @@ exports.reUploadMissingDocs = async(req,res) => {
 
 exports.assignBidder = async(req,res) => {
     try{
-        const {id} = req.params;
 
-        const result = await bidderService.assignBidder(id);
+        const result = await bidderService.assignBidder(req.user.id);
 
         res.status(200).json({
             success : true,
@@ -113,9 +112,7 @@ exports.assignBidder = async(req,res) => {
 
 exports.getMybids = async(req,res) => {
     try{
-        const {id} = req.params;
-
-        const result = await bidderService.getMyBids(id);
+        const result = await bidderService.getMyBids(req.user.id);
 
         res.status(200).json({
             success : true,
@@ -148,3 +145,24 @@ exports.getBidsByTender = async (req, res) => {
     });
   }
 };
+
+exports.getBidById = async(req,res) => {
+    try{
+        const {id} = req.params;
+        const result = await bidderService.getBidById(
+            id,
+            req.user.id
+        );
+
+        res.status(200).json({
+            success : true,
+            data : result
+        });
+    }
+    catch(err){
+        res.status(400).json({
+            success : false,
+            message : err.message
+        });
+    }
+}

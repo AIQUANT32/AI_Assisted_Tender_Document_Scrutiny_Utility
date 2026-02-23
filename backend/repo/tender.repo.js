@@ -4,8 +4,10 @@ exports.createTender = (data) => {
     return Tender.create(data);
 };
 
-exports.getAllTenders = () => {
-    return Tender.find().sort({ createdAt: -1 });
+exports.getAllTenders = (userId) => {
+    return Tender.find({
+        createdBy: {$ne: userId}
+    }).sort({ createdAt: -1 });
 };
 
 
@@ -25,9 +27,18 @@ exports.countActiveTenders = () => {
     return Tender.countDocuments({ status: "ACTIVE" });
 };
 
-exports.countTenderByDepartment = (tenderId,department) => {
+exports.countTenderByDepartment = (regexPattern,department) => {
     return Tender.countDocuments({ 
-        tenderId,
+        tenderId: {$regex: regexPattern},
         department
   });
 }
+
+exports.closeTender = (tenderId, status, closedAt) => {
+    return Tender.findByIdAndUpdate(
+        {tenderId},
+        { status },
+        {closedAt},
+        { new: true }
+    );
+};

@@ -2,15 +2,22 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "./features/auth/pages/login";
 import Signup from "./features/auth/pages/signup";
-import Dashboard from "./features/dashboard/pages/dashboard";
+
 import DashboardLayout from "./layout/dashboardlayout";
+
+import Dashboard from "./features/dashboard/pages/dashboard";
 import CreateTender from "./features/tender/pages/createtender";
 import ViewTender from "./features/tender/pages/viewtender";
+
+import SubmitBid from "./features/bidder/pages/submitBid";
+import MyBids from "./features/bidder/pages/myBids";
+import MyTenderBids from "./features/tender/pages/myTenders";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+
         {/* Default */}
         <Route path="/" element={<Navigate to="/login" />} />
 
@@ -18,36 +25,22 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        {/* Dashboard */}
-        <Route
-          path="/dashboard"
-          element={
-            <DashboardLayout>
-              <Dashboard />
-            </DashboardLayout>
-          }
-        />
+        {/* Dashboard Layout + Nested Routes */}
+        <Route path="/dashboard" element={<DashboardLayout />}>
 
-        <Route
-          path="/tenders/create"
-          element={
-            <DashboardLayout>
-              <CreateTender />
-            </DashboardLayout>
-          }
-        />
+          {/* /dashboard */}
+          <Route index element={<Dashboard />} />
 
-        <Route
-          path="/tenders"
-          element={
-            <DashboardLayout>
-              <ViewTender />
-            </DashboardLayout>
-          }
-        />
+          {/* Tender Routes */}
+          <Route path="tenders" element={<ViewTender />} />
+          <Route path="tenders/create" element={<CreateTender />} />
+          <Route path="tenders/:tenderId/bid" element={<SubmitBid />} />
+          <Route path="my-tenders-bids" element={<MyTenderBids />} />
+          
+          <Route path="my-bids" element={<MyBids />} />
 
-        {/* Fallback */}
-        <Route path="*" element={<Navigate to="/login" />} />
+
+        </Route>
       </Routes>
     </BrowserRouter>
   );
