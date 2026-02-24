@@ -33,7 +33,8 @@ exports.getAllTenders = async (req, res) => {
 // Get Tender By ID
 exports.getTenderById = async (req, res) => {
   try {
-    const tender = await tenderService.getTenderById(req.params.id);
+    const {tenderId} = req.params;
+    const tender = await tenderService.getTenderById(tenderId);
 
     res.status(200).json(tender);
 
