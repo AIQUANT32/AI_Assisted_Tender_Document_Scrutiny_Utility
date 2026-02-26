@@ -27,3 +27,5 @@ dist-ssr
 package.json
 package-lock.json
 frontend/src/api.rest
+AI/.venv
+AI/__pycache__
