@@ -13,6 +13,9 @@ const AuthForm = ({ type, onSubmit, error }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    localStorage.setItem("user", JSON.stringify({
+      username: form.username
+    }));
     onSubmit(form);
   };
 

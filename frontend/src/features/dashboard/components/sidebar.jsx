@@ -1,15 +1,21 @@
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
+  const [user,setUser] = useState(null);
+
+  useEffect(() => {
+    const isUser = localStorage.getItem("user");
+    if(isUser){
+      const userObj = JSON.parse(isUser) 
+      setUser(userObj.username);
+    }
+  }, []);
   return (
     <div className="w-64 min-h-screen bg-white border-r border-gray-100 flex flex-col justify-between px-6 py-8">
 
       {/* Top Section */}
       <div>
-        <div className="text-xl font-semibold text-gray-800 mb-8">
-          TenderFlow
-        </div>
-
         <nav className="flex flex-col gap-2">
           
           <NavLink
@@ -87,7 +93,7 @@ const Sidebar = () => {
       {/* Footer Section */}
       <div className="pt-6 border-t border-gray-100">
         <div className="text-sm font-medium text-gray-800">
-          John Anderson
+        {user}
         </div>
         <div className="text-xs text-gray-500">
           Administrator

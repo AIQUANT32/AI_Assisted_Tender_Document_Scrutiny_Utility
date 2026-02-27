@@ -1,3 +1,4 @@
+const aiService = require("./ai.service")
 const bidderRepo = require("../repo/bidder.repo");
 const tenderRepo = require("../repo/tender.repo");
 
@@ -29,27 +30,39 @@ exports.startSubmission = async (data, userId) => {
   });
 };
 
-exports.completeSubmission = async (bidderId, identifiedDocs) => {
-  const bidder = await bidderRepo.findById(bidderId);
+exports.completeSubmission = async (bidderId, files) => {
+  const bidd = await bidderRepo.findById(bidderId);
 
-  if (!bidder) {
+  if (!bidd) {
     throw new Error("Submission not found");
   }
 
-  if (bidder.status !== "PROCESSING") {
+  if (bidd.status !== "PROCESSING") {
     throw new Error("Classification not allowed in current state");
   }
 
-  const tender = await tenderRepo.getTenderById(bidder.tenderId);
+  const tender = await tenderRepo.getTenderById(bidd.tenderId);
 
-  const requiredDocs = tender.requiredDocuments;
-  const missingDocs = requiredDocs.filter(
-    (doc) => !identifiedDocs.includes(doc),
+  let foundSet = new Set();
+
+  for (const file of files){
+    const aiResult = await aiService.classifyDocuments(
+      file.buffer,
+      tender.requiredDocuments
+    );
+    console.log(aiResult);
+
+    aiResult.data.found.forEach(doc => foundSet.add(doc));
+  }
+
+  const found = Array.from(foundSet);
+  const missing = tender.requiredDocuments.filter(
+    doc => !found.includes(doc)
   );
 
   return bidderRepo.updateById(bidderId, {
-    requiredDocumentsFound: identifiedDocs,
-    missingDocuments: missingDocs,
+    requiredDocumentsFound: found,
+    missingDocuments: missing,
     status: "CREATED",
   });
 };
@@ -91,36 +104,6 @@ exports.reviewSubmission = async(id,action,remarks = null) => {
 
     throw new Error("Invalid review action");
 }
-
-exports.reUploadMissingDocs = async (tenderId, userId, newIdentifiedDocs) => {
-  const bidder = await bidderRepo.findByTenderAndBidder(tenderId, userId);
-
-  if (!bidder) {
-    throw new Error("Submission not found");
-  }
-
-  if (bidder.status !== "REUPLOAD_REQUIRED") {
-    throw new Error("Re-upload not allowed");
-  }
-
-  await bidderRepo.updateStatus(bidder._id,"PROCESSING");
-
-  const tender = await tenderRepo.getTenderById(tenderId);
-
-  const updatedFound = [
-    ...new Set([...bidder.requiredDocumentsFound, ...newIdentifiedDocs]),
-  ];
-
-  const updatedMissing = tender.requiredDocuments.filter(
-    (docs) => !updatedFound.includes(doc),
-  );
-
-  return bidderRepo.updateById(bidder._id,{
-    requiredDocumentsFound: updatedFound,
-    missingDocuments: updatedMissing,
-    status: "CREATED"
-  });
-};
 
 exports.assignBidder = async (bidderId) => {
     const bidder = await bidderRepo.findById(bidderId);

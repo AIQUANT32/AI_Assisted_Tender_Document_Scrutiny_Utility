@@ -22,12 +22,16 @@ exports.startSubmission = async (req,res) => {
 
 exports.completeSubmission = async (req,res) => {
     try{
-        const {id} = req.params;
-        const {identifiedDocs} = req.body;
+        const id = req.params.id;
+        const files = req.files;
+
+        if(!files || files.length === 0){
+            throw new Error("No files uploaded")
+        }
 
         const result = await bidderService.completeSubmission(
             id,
-            identifiedDocs
+            files
         );
 
         res.status(200).json({

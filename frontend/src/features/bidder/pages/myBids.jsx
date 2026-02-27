@@ -12,14 +12,11 @@ const MyBids = () => {
   const fetchBids = async () => {
     const token = localStorage.getItem("token");
 
-    const res = await fetch(
-      "http://localhost:5000/api/bidders/myBids",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
+    const res = await fetch("http://localhost:5000/api/bidders/myBids", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     const data = await res.json();
     if (res.ok) setBids(data.data);
@@ -29,14 +26,11 @@ const MyBids = () => {
     const token = localStorage.getItem("token");
     setLoadingDetails(true);
 
-    const res = await fetch(
-      `http://localhost:5000/api/bidders/${bidId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
+    const res = await fetch(`http://localhost:5000/api/bidders/${bidId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     const data = await res.json();
     if (res.ok) setSelectedBid(data.data);
@@ -49,8 +43,7 @@ const MyBids = () => {
   };
 
   const statusBadge = (status) => {
-    const base =
-      "text-xs font-medium px-2.5 py-1 rounded-full";
+    const base = "text-xs font-medium px-2.5 py-1 rounded-full";
 
     switch (status) {
       case "PROCESSING":
@@ -74,10 +67,7 @@ const MyBids = () => {
     <>
       <div className="min-h-screen bg-gray-50 p-8">
         <div className="max-w-6xl mx-auto space-y-6">
-
-          <h2 className="text-2xl font-semibold text-gray-800">
-            My Bids
-          </h2>
+          <h2 className="text-2xl font-semibold text-gray-800">My Bids</h2>
 
           {bids.length === 0 ? (
             <div className="bg-white border border-gray-100 rounded-2xl p-6 text-gray-600">
@@ -134,10 +124,13 @@ const MyBids = () => {
               <p className="text-gray-500">Loading...</p>
             ) : (
               <div className="space-y-3 text-sm text-gray-600">
+                <div>
+                  <strong>Tender ID:</strong> {selectedBid.tenderId}
+                </div>
 
-                <div><strong>Tender ID:</strong> {selectedBid.tenderId}</div>
-
-                <div><strong>Bid Amount:</strong> ₹ {selectedBid.bidAmount}</div>
+                <div>
+                  <strong>Bid Amount:</strong> ₹ {selectedBid.bidAmount}
+                </div>
 
                 <div>
                   <strong>Status:</strong>{" "}
@@ -176,7 +169,6 @@ const MyBids = () => {
                     ? new Date(selectedBid.reviewedAt).toLocaleString()
                     : "Not Reviewed"}
                 </div>
-
               </div>
             )}
 
@@ -188,7 +180,6 @@ const MyBids = () => {
                 Close
               </button>
             </div>
-
           </div>
         </div>
       )}

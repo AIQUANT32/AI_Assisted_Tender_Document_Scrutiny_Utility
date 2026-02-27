@@ -34,7 +34,6 @@ const BidderSchema = new mongoose.Schema(
         "PROCESSING",
         "CREATED",
         "REVIEWED",
-        "REUPLOAD_REQUIRED",
         "ASSIGNED",
         "REJECTED"
       ],

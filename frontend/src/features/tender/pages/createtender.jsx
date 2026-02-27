@@ -6,8 +6,7 @@ const documentOptions = [
   "GST_CERTIFICATE",
   "ITR",
   "BALANCE_SHEET",
-  "WORK_ORDER",
-  "EMD_RECEIPT",
+  "INCORPORATION_CERTIFICATE",
 ];
 
 const departments = [
@@ -87,16 +86,22 @@ const CreateTender = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <OrbitProgress dense color="#4f46e5" size="medium" />
+      </div>
+    );
+  }
+
   return (
     <div className="h-full flex flex-col bg-gray-50 p-8">
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-        
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">
           Create Tender
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-
           {/* Tender Name */}
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1">
@@ -225,7 +230,6 @@ const CreateTender = () => {
               {loading ? "Creating..." : "Create Tender"}
             </button>
           </div>
-
         </form>
       </div>
     </div>

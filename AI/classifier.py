@@ -18,14 +18,13 @@ def classify_pdf(file_bytes, required_docs):
         
         pred = model.predict([text])[0]
         predictions.append(pred)
-        
-        found = list(set(predictions))
-        missing = [doc for doc in required_docs if doc not in found]
-        extra = [doc for doc in found if doc not in required_docs]
-        
-        return {
-            "found" : found,
-            "missing" : missing,
-            "extra" : extra,
-            "pages" : predictions,
-        }
+    
+    found = list(set(predictions))
+    missing = [doc for doc in required_docs if doc not in found]
+    extra = [doc for doc in found if doc not in required_docs]    
+    
+    return {
+        "found" : found,
+        "missing" : missing,
+        "extra" : extra
+    }

@@ -5,7 +5,7 @@ const SubmitBid = () => {
   const { tenderId } = useParams();
 
   const [bidAmount, setBidAmount] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFiles, setselectedFiles] = useState([]);
   const [requiredDocs, setRequiredDocs] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -14,14 +14,11 @@ const SubmitBid = () => {
   // Fetch tender details
   useEffect(() => {
     const fetchTender = async () => {
-      const res = await fetch(
-        `http://localhost:5000/api/tenders/${tenderId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
+      const res = await fetch(`http://localhost:5000/api/tenders/${tenderId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       const data = await res.json();
 
@@ -39,7 +36,7 @@ const SubmitBid = () => {
       return;
     }
 
-    if (!selectedFile) {
+    if (!selectedFiles) {
       alert("Please upload document");
       return;
     }
@@ -48,17 +45,14 @@ const SubmitBid = () => {
 
     try {
       // Create Bid
-      const createRes = await fetch(
-        "http://localhost:5000/api/bidders/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          },
-          body: JSON.stringify({ tenderId, bidAmount })
-        }
-      );
+      const createRes = await fetch("http://localhost:5000/api/bidders/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ tenderId, bidAmount }),
+      });
 
       const createData = await createRes.json();
 
@@ -70,18 +64,20 @@ const SubmitBid = () => {
 
       // Upload Docs
       const formData = new FormData();
-      formData.append("file", selectedFile);
       formData.append("bidId", bidId);
+      selectedFiles.forEach((file) => {
+        formData.append("files", file);
+      });
 
       const uploadRes = await fetch(
-        "http://localhost:5000/api/bidders/upload",
+        `http://localhost:5000/api/bidders/${bidId}/complete`,
         {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
-          body: formData
-        }
+          body: formData,
+        },
       );
 
       const uploadData = await uploadRes.json();
@@ -93,8 +89,7 @@ const SubmitBid = () => {
       alert("Bid submitted successfully");
 
       setBidAmount("");
-      setSelectedFile(null);
-
+      setselectedFiles([]);
     } catch (err) {
       alert(err.message);
     }
@@ -104,14 +99,28 @@ const SubmitBid = () => {
 
   return (
     <div className="h-full flex items-start justify-center">
-      <div className="w-full max-w-xl bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+          <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-72">
+            <div className="w-10 h-10 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
 
+            <div className="text-center">
+              <div className="font-semibold text-gray-800">
+                Processing your bid
+              </div>
+              <div className="text-sm text-gray-500">
+                Running AI document classification...
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      <div className="w-full max-w-xl bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">
           Submit Bid
         </h2>
 
         <div className="space-y-8">
-
           {/* Bid Amount */}
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1">
@@ -157,7 +166,6 @@ const SubmitBid = () => {
             </label>
 
             <div className="relative h-48 rounded-lg border-2 border-indigo-500 bg-gray-50 flex justify-center items-center shadow-lg hover:shadow-xl transition-shadow duration-300">
-
               <div className="absolute flex flex-col items-center pointer-events-none">
                 <img
                   alt="File Icon"
@@ -174,15 +182,18 @@ const SubmitBid = () => {
 
               <input
                 type="file"
+                multiple
                 accept="application/pdf"
                 className="h-full w-full opacity-0 cursor-pointer"
-                onChange={(e) => setSelectedFile(e.target.files[0])}
+                onChange={(e) => setselectedFiles(Array.from(e.target.files))}
               />
             </div>
 
-            {selectedFile && (
+            {selectedFiles.length > 0 && (
               <div className="text-sm text-gray-600 mt-2">
-                Selected: {selectedFile.name}
+                {selectedFiles.map((file) => (
+                  <div key={file.name}>{file.name}</div>
+                ))}
               </div>
             )}
           </div>
@@ -197,7 +208,6 @@ const SubmitBid = () => {
           >
             {loading ? "Submitting..." : "Create Bid"}
           </button>
-
         </div>
       </div>
     </div>
