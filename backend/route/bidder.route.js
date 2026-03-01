@@ -5,7 +5,7 @@ const uploadDocs = require("../middleware/uploadDocs");
 router.post("/",Controller.startSubmission);
 router.post("/:id/complete",uploadDocs.array("files",10),Controller.completeSubmission);
 router.post("/:id/review",Controller.reviewSubmission);
-router.post("/:tenderId/reupload",Controller.reUploadMissingDocs);
+// router.post("/:tenderId/reupload",Controller.reUploadMissingDocs);
 router.post("/:id/assign",Controller.assignBidder);
 router.get("/myBids",Controller.getMybids);
 router.get("/tender/:tenderId",Controller.getBidsByTender);

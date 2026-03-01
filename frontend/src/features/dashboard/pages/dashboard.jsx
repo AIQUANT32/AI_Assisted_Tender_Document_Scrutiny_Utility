@@ -57,6 +57,7 @@ const Dashboard = () => {
           </button>
 
           <button
+          onClick={() => navigate("tenders")}
             className="flex flex-col items-center justify-center bg-gray-100 hover:bg-gray-200 
                        text-gray-700 rounded-2xl p-8 transition"
           >

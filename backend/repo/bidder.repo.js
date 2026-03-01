@@ -21,21 +21,6 @@ exports.updateById = (id, updateData) => {
   );
 };
 
-exports.updateClassification = (
-  id,
-  requiredDocumentsFound,
-  missingDocuments
-) => {
-  return Bidder.findByIdAndUpdate(
-    id,
-    {
-      requiredDocumentsFound,
-      missingDocuments
-    },
-    { new: true }
-  );
-};
-
 exports.updateStatus = (id, status) => {
   return Bidder.findByIdAndUpdate(
     id,

@@ -32,7 +32,7 @@ const MyTenderBids = () => {
 
     const res = await fetch(
       `http://localhost:5000/api/bidders/tender/${tenderId}`,
-      { headers: { Authorization: `Bearer ${token}` } }
+      { headers: { Authorization: `Bearer ${token}` } },
     );
 
     const data = await res.json();
@@ -44,8 +44,7 @@ const MyTenderBids = () => {
   const reviewBid = async (bidId, action) => {
     const token = localStorage.getItem("token");
 
-    const remarks =
-      action === "APPROVE" ? null : prompt("Enter remarks");
+    const remarks = action === "APPROVE" ? null : prompt("Enter remarks");
 
     const res = await fetch(
       `http://localhost:5000/api/bidders/${bidId}/review`,
@@ -56,7 +55,7 @@ const MyTenderBids = () => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ action, remarks }),
-      }
+      },
     );
 
     if (res.ok) fetchBidders(selectedTender.tenderId);
@@ -72,7 +71,7 @@ const MyTenderBids = () => {
       {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
-      }
+      },
     );
 
     if (res.ok) {
@@ -82,10 +81,11 @@ const MyTenderBids = () => {
   };
 
   const statusBadge = (status) => {
-    const base =
-      "text-xs font-medium px-2.5 py-1 rounded-full";
+    const base = "text-xs font-medium px-2.5 py-1 rounded-full";
 
     switch (status) {
+      case "ACTIVE":
+        return `${base} bg-green-100 text-green-600`;
       case "CREATED":
         return `${base} bg-blue-50 text-blue-600`;
       case "REVIEWED":
@@ -96,6 +96,8 @@ const MyTenderBids = () => {
         return `${base} bg-green-50 text-green-600`;
       case "REJECTED":
         return `${base} bg-red-50 text-red-600`;
+      case "CLOSED":
+        return `${base} bg-red-50 text-red-600`;
       default:
         return `${base} bg-gray-100 text-gray-600`;
     }
@@ -105,7 +107,6 @@ const MyTenderBids = () => {
     <>
       <div className="min-h-screen bg-gray-50 p-8">
         <div className="max-w-6xl mx-auto space-y-6">
-
           <h2 className="text-2xl font-semibold text-gray-800">
             My Tender Bids
           </h2>
@@ -122,9 +123,7 @@ const MyTenderBids = () => {
                   onClick={() => openTender(tender)}
                   className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition cursor-pointer"
                 >
-                  <h3 className="font-medium text-gray-800">
-                    {tender.name}
-                  </h3>
+                  <h3 className="font-medium text-gray-800">{tender.name}</h3>
                   <p className="text-sm text-gray-500 mt-1">
                     ID: {tender.tenderId}
                   </p>
@@ -218,7 +217,6 @@ const MyTenderBids = () => {
                 Close
               </button>
             </div>
-
           </div>
         </div>
       )}

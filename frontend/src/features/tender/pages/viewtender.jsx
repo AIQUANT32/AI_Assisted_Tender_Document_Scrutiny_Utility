@@ -62,7 +62,7 @@ const ViewTenders = () => {
 
     return status === "ACTIVE"
       ? `${base} bg-green-50 text-green-600`
-      : `${base} bg-gray-100 text-gray-600`;
+      : `${base} bg-red-100 text-red-600`;
   };
 
   if (loading) {
@@ -97,10 +97,16 @@ const ViewTenders = () => {
                          focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
             >
               <option value="">All Departments</option>
-              <option value="Public Works Department">
-                Public Works Department
-              </option>
+              <option value="Public Works Department">Public Works Department</option>
+              <option value="Urban Development Department">Urban Development Department</option>
+              <option value="Health Department">Health Department</option>
+              <option value="Education Department">Education Department</option>
+              <option value="Energy Department">Energy Department</option>
+              <option value="Transport Department">Transport Department</option>
               <option value="IT Department">IT Department</option>
+              <option value="Procurement Department">Procurement Department</option>
+              <option value="Municipal Corporation">Municipal Corporation</option>
+              <option value="Infrastructure Development Corporation">Infrastructure Development Corporation</option>
             </select>
 
             <select
